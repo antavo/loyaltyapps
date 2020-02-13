@@ -1,0 +1,14 @@
+<?php
+/**
+ * Displaying loyalty center embedded in an iframe.
+ *
+ * @var Antavo\LoyaltyApps\Block\Frontend\Microsite $block
+ */
+
+if (!$url = $block->getMicrositeUrl()) {
+    return;
+}
+
+?>
+
+<iframe src="<?=htmlspecialchars($url)?>" style="width: 100%; height: 600px; border: 0" id="loyalty-center-frame"></iframe>

@@ -1,0 +1,81 @@
+<?php
+/**
+ * Displaying coupon box under cart.
+ *
+ * @var Antavo\LoyaltyApps\Block\Frontend\CouponBox $block
+ */
+
+// If the block is not enabled yet, return
+if (!$block->isEnabled()) {
+    return;
+}
+
+// If the customer has no spendable points, return
+if (!$customerPoints = $block->getCustomerSpendablePoints()) {
+    return;
+}
+
+$pointLimit = $block->getPointRedeemLimit();
+$pointsBurned = $block->getPointsBurned();
+
+// If there is no explicitly defined points burned value, calculating
+// with the maximum of the redeemable points -- with the customer's total spendable.
+if (!isset($pointsBurned)) {
+    $pointsBurned = $customerPoints;
+}
+
+// Injecting the hijacked HTML before appending our discount box
+$this->getChildHtml('child');
+
+?>
+<div class="block discount" id="loyalty-discount" data-collapsible="true" role="tablist">
+    <div class="title" data-role="title" role="tab" aria-selected="false" aria-expanded="false" tabindex="0">
+        <strong id="block-discount-heading" role="heading" aria-level="2">
+            <?=__('Loyalty Discount')?>
+        </strong>
+    </div>
+    <div data-role="content" aria-labelledby="block-discount-heading" role="tabpanel" aria-hidden="true">
+        <?php
+        $text = $block->getCurrentStoreCurrencySymbol() . $block->calculateCouponValue($customerPoints);
+        ?>
+        <p>
+            <?=sprintf(
+                __('You have <strong>%d</strong> reward points worth %s available to spend.'),
+                htmlspecialchars($customerPoints),
+                $text
+            )?>
+        </p>
+
+        <form id="loyalty-discount-form" action="<?=htmlspecialchars($block->getStoreUrl('loyaltycentral/cart/coupon'))?>" method="POST">
+            <div class="fieldset coupon">
+                <div class="field">
+                    <label for="coupon_code" class="label">
+                        <span><?=__('Enter point amount')?></span>
+                    </label>
+                    <div class="control">
+                        <input type="number"
+                               class="input-text qty qty-points"
+                               name="points_burned"
+                               value="<?=htmlspecialchars($pointsBurned)?>"
+                               min="0"
+                               max="<?=htmlspecialchars($customerPoints)?>"
+                               placeholder="<?=__('Enter point amount')?>"/>
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button form="loyalty-discount-form" class="action apply primary" type="submit" value="<?=__('Update coupon')?>">
+                            <span><?=__('Update coupon')?></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <?php if ($pointLimit > 0): ?>
+            <p style="font-size: 11px; padding-top: 4px;">
+                <?=sprintf(__('You can use a maximum of %s points for this purchase.'), htmlspecialchars($pointLimit))?>
+            </p>
+        <?php endif; ?>
+    </div>
+</div>

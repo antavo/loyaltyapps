@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <!-- This plugin adds the "Approve" and "Reject" buttons to the Checkout's ribbon -->
+        <plugin name="Antavo_LoyaltyApps::pluginBeforeView"
+                type="Antavo\LoyaltyApps\Helper\Admin" />
+    </type>
+    <type name="Magento\Review\Controller\Adminhtml\Product\Save">
+        <!-- This plugin sends in the review event to the Antavo Events API -->
+        <plugin name="Antavo_LoyaltyApps::afterReviewSave"
+                type="Antavo\LoyaltyApps\Helper\App\Reviews" />
+    </type>
+</config>

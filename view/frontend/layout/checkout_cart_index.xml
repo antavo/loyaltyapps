@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="checkout.cart.totals.container">
+             <!-- This block appends the points snippet to the cart page -->
+            <block class="Antavo\LoyaltyApps\Block\Frontend\IncentivizedPurchase\CartPoints"
+                   name="antavo_incentivized_points"
+                   after="-"
+                   template="Antavo_LoyaltyApps::incentivizedpurchase/incentivized-points.phtml"/>
+        </referenceContainer>
+
+        <referenceContainer name="cart.discount">
+            <!-- This block appends the coupon box (point redemption) to the cart page -->
+            <block class="Antavo\LoyaltyApps\Block\Frontend\CouponBox"
+                   name="antavo_coupon_box"
+                   after="-"
+                   template="Antavo_LoyaltyApps::coupon-box.phtml"/>
+        </referenceContainer>
+
+        <move element="cart.discount"
+              destination="checkout.cart.container"
+              before="checkout.cart.order.actions.gift_options" />
+    </body>
+</page>

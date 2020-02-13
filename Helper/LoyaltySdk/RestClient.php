@@ -1,0 +1,120 @@
+<?php
+namespace Antavo\LoyaltyApps\Helper\LoyaltySdk;
+
+use Antavo\LoyaltyApps\Helper\LoyaltySdk\Pakard\RestClient\CurlTransport;
+use Antavo\LoyaltyApps\Helper\LoyaltySdk\Pakard\RestClient\RequestInterface;
+use Antavo\LoyaltyApps\Helper\LoyaltySdk\Pakard\RestClient\RestClient as RestClientParent;
+use Antavo\LoyaltyApps\Helper\LoyaltySdk\EmarTech\Escher\Escher;
+
+/**
+ *
+ */
+class RestClient extends RestClientParent {
+    /**
+     * @inheritdoc
+     */
+    protected $_baseUrl = 'https://api.%s.antavo.com';
+
+    /**
+     * @var string
+     */
+    protected $_service = 'api';
+
+    /**
+     * @var string
+     */
+    protected $_region;
+
+    /**
+     * @var string
+     */
+    protected $_key;
+
+    /**
+     * @var string
+     */
+    protected $_secret;
+
+    /**
+     * @param string $region
+     * @param string $key
+     * @param string $secret
+     */
+    public function __construct($region, $key, $secret) {
+        $this->_region = $region;
+        $this->_key = $key;
+        $this->_secret = $secret;
+        $this->_baseUrl = sprintf($this->_baseUrl, $region);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCredentialScope() {
+        return sprintf(
+            '%s/%s/antavo_request',
+            $this->_region,
+            $this->_service
+        );
+    }
+
+    /**
+     * @return \Antavo\LoyaltyApps\Helper\LoyaltySdk\EmarTech\Escher\Escher
+     */
+    public function createEscher() {
+        return Escher::create($this->getCredentialScope())
+            ->setVendorKey('Antavo')
+            ->setAlgoPrefix('ANTAVO')
+            ->setDateHeaderKey('Date')
+            ->setAuthHeaderKey('Authorization');
+    }
+
+    /**
+     * @param \Antavo\LoyaltyApps\Helper\LoyaltySdk\Pakard\RestClient\RequestInterface $request
+     * @return $this
+     */
+    public function signRequest(RequestInterface $request) {
+        $headers = $this->createEscher()->signRequest(
+            $this->_key,
+            $this->_secret,
+            $request->getMethod(),
+            $request->getUrl(),
+            $request->encodeBody()
+        );
+
+        foreach ($headers as $name => $value) {
+            $request->addHeader($name, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSend() {
+        if (!$this->getTransport()) {
+            $this->setTransport(new CurlTransport);
+        }
+
+        $this->signRequest(
+            $request = $this->getRequest()
+                ->addHeader('Content-Type', 'application/json; charset="UTF-8"')
+                ->addHeader('User-Agent', 'Antavo Loyalty PHP SDK Client 2.0')
+        );
+    }
+
+    /**
+     * @param string $customer
+     * @param string $action
+     * @param array $data
+     * @return mixed
+     */
+    public function sendEvent($customer, $action, array $data = []) {
+        return $this->send(
+            RequestInterface::METHOD_POST,
+            '/events',
+            compact('customer', 'action', 'data')
+        );
+    }
+}

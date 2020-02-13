@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+        <tab id="loyaltyapps" translate="label" sortOrder="999999">
+            <label>Loyalty Apps</label>
+        </tab>
+        <section id="antavo_loyaltyapps" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General</label>
+            <tab>loyaltyapps</tab>
+            <resource>Antavo_LoyaltyApps::admin</resource>
+            <!-- Core section -->
+            <group id="core" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>Core</label>
+
+                <field id="environment" sortOrder="0" type="select" showInDefault="1">
+                    <label>Environment</label>
+                    <comment>
+                        Select the stack you want to connect your webstore with.
+                        Please click on the save config button before setting the connection.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\Environment</source_model>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="region" sortOrder="1" type="select" showInDefault="1">
+                    <label>Region</label>
+                    <comment>
+                        Select the region to configure the SDK.
+                        Please click on the save config button before setting the connection.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\Region</source_model>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="enabled" sortOrder="2" type="button" showInDefault="1">
+                    <frontend_model>Antavo\LoyaltyApps\Block\Adminhtml\ConnectButton</frontend_model>
+                    <comment>
+                        Press the "Sync settings" button to transfer all configurations from Antavo Platform.
+                        Plugin functions are not available until the synchronization process is completed at least once.
+                    </comment>
+                </field>
+
+                <field id="authentication" sortOrder="3" type="select" showInDefault="1">
+                    <label>Authentication</label>
+                    <comment>
+                        Sets the customer authentication method. If you want to use our (default) host-based authentication method set this to 'cookie'.
+                        If you want to use the social authentication method you should set this to 'social'.
+                        If you set full-page caching in Magento’s cache management please use the social option.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\CustomerAuthentication</source_model>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="opt_in_event" type="select" sortOrder="4" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Customer opt-in sending</label>
+                    <comment>If this feature is turned on, new user registrations will be sent to Antavo's system.</comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+
+                <field id="opt_in_redirect_url" sortOrder="5" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Redirect url</label>
+                    <comment>
+                        Please provide a full url to redirect after a customer enrolls to the loyalty program from microsite.
+                        Empty value will redirect back to the referrer page.
+                        eg.: "https://www.google.com"
+                    </comment>
+                </field>
+
+                <field id="js_sdk_hash_method" type="select" sortOrder="6" showInDefault="1">
+                    <label>JS SDK hash method</label>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\JsSDKHashMethodType</source_model>
+                    <comment>
+                        Please select the hash method you want to use in the JS SDK.
+                    </comment>
+                </field>
+            </group>
+            <!-- Core section end -->
+
+            <!-- API section -->
+            <group id="api" sortOrder="2" showInDefault="1">
+                <label>API</label>
+
+                <field id="log_level" sortOrder="4" type="select" showInDefault="1">
+                    <label>Logging level</label>
+                    <comment>Set the action level you want the log to save and display.</comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\ApiLogLevel</source_model>
+                </field>
+            </group>
+            <!-- API section end -->
+
+            <!-- Purchase section -->
+            <group id="purchase" sortOrder="3" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>Purchase</label>
+
+                <field id="auto_generate_coupon" sortOrder="0" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto-generate coupon</label>
+                    <comment>
+                        When this feature is enabled, the total number of spendable points
+                        (on the storefront) will be automatically converted into a coupon.
+                        Otherwise, customers have to enter the amount of points to convert into a coupon.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+
+                <field id="coupon_settings_box" sortOrder="1" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Coupon settings box</label>
+                    <comment>
+                        You can enable a field where customers can set the number of points to convert into a coupon.
+                        If you choose to disable, the total number of spendable points will be converted into a coupon automatically.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+
+                <field id="point_rate" sortOrder="3" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Point exchange rate</label>
+                    <comment>
+                        Set the exchange rate between points and coupon value.
+                    </comment>
+                    <validate>validate-number required-entry</validate>
+                </field>
+
+                <field id="convert_currency" sortOrder="4" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Convert currency into base currency</label>
+                    <comment>If you want to convert the currency of the local store into the base currency then set ‘yes’.</comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+
+                <field id="reserve_burned_points" sortOrder="5" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Reserve spent points (recommended)</label>
+                    <comment>
+                        If you turn this setting off, customers will be able to spend their points even before their orders are shipped and invoiced.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+
+                <field id="checkout_event_sending" type="select" sortOrder="6" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Checkout sending</label>
+                    <comment>
+                        If this feature is turned on, new purchases will be sent to Antavo's system.
+                        Note: The purchase in Magento needs to be invoiced and shipped.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <!-- Purchase section end -->
+
+            <!-- Discount section begin -->
+            <group id="discount" sortOrder="4" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>Discount</label>
+
+                <field id="point_limit" sortOrder="1" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Point limit</label>
+                    <comment>
+                        Set the maximum number of points customers can use in a single checkout.
+                        If this value is zero, there will be no upper limit.
+                    </comment>
+                    <validate>validate-number required-entry</validate>
+                </field>
+
+                <field id="checkout_sending_type" type="select" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Checkout sending type</label>
+                    <comment>
+                        Select the point in transaction when purchases are sent to Antavo.
+                        Payment received: Send when purchase flow is completed.
+                        Purchase completed: Send when purchase's invoiced and shipped.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\CheckoutSendingType</source_model>
+                </field>
+
+                <field id="checkout_discount_code_prefix" type="text" sortOrder="5" showInDefault="1">
+                    <label>Checkout discount code prefix</label>
+                    <comment>
+                        Default checkout discount code prefix (ANTPB) can be set here manually.
+                        Keep this field empty if you don't want to change the default.
+                    </comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+
+                <field id="friend_referral_discount_code_prefix" type="text" sortOrder="6" showInDefault="1">
+                    <label>Friend referral discount code prefix</label>
+                    <comment>
+                        Default friend referral discount code prefix (ANTFR) can be set here manually.
+                        Keep this field empty if you don't want to change the default.
+                    </comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+
+                <field id="friend_referral_discount_websites" type="multiselect" sortOrder="7" showInDefault="1">
+                    <label>Website restrictions for Friend referral coupons</label>
+                    <source_model>Magento\Store\Model\ResourceModel\Website\Collection</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+
+                <field id="friend_referral_discount_groups" type="multiselect" sortOrder="8" showInDefault="1">
+                    <label>Customer group restrictions for Friend referral coupons</label>
+                    <source_model>Magento\Customer\Model\ResourceModel\Group\Collection</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+
+                <field id="friend_referral_discount_segments" type="multiselect" sortOrder="9" showInDefault="1">
+                    <label>Segment restrictions for Friend referral coupons</label>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\CustomerSegment</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+
+                <field id="point_mechanism" type="select" sortOrder="10" showInDefault="1">
+                    <label>Point mechanism</label>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\PointMechanismType</source_model>
+                    <comment>
+                        There are two ways you can set Antavo point burning:
+                        generate discount coupon or use Magento reward module
+                    </comment>
+                </field>
+            </group>
+            <!-- Discount section end -->
+
+            <!-- Social share section -->
+            <group id="socialshare" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Social share</label>
+
+                <field id="enabled_stores" sortOrder="1" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enable store</label>
+                    <comment>
+                        Here you can enable or disable the social share module on the Antavo Loyalty Management Platform.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+            </group>
+            <!-- Social share section end -->
+
+            <!-- Reviews section -->
+            <group id="review" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Reviews</label>
+
+                <field id="enabled" sortOrder="1" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enabled</label>
+                    <comment>
+                        Here you can enable or disable the gamified reviews module on the Antavo Loyalty Management Platform.
+                    </comment>
+                    <source_model>Antavo\LoyaltyApps\Helper\SourceModels\YesNo</source_model>
+                </field>
+            </group>
+            <!-- Social share section end -->
+        </section>
+    </system>
+</config>

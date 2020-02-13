@@ -1,0 +1,34 @@
+<?php
+/**
+ * Displaying incentivized points under cart.
+ *
+ * @var Antavo\LoyaltyApps\Block\Frontend\IncentivizedPurchase\CartPoints $block
+ */
+
+// If the block is not enabled yet, return
+if (!$block->isEnabled()) {
+    return;
+}
+
+?>
+
+<div style="width: 100%; max-width: inherit; text-align: right;" class="extra-info">
+    <div class="antavo-points"></div>
+</div>
+
+<script>
+    function onBrandUpdate() {
+        Antavo.IncentivizedPurchase.init();
+        Antavo.Campaigns.init();
+
+        Antavo.Campaigns.calculateCampaignBonus(
+            <?=json_encode($block->createMockedTransactionFor($block->getCartModel()->getQuote()))?>,
+            function (i) {
+                document
+                    .querySelectorAll('div[class="antavo-points"]')
+                    .forEach(function (container) {
+                        container.innerHTML = i.future;
+                    });
+            });
+    }
+</script>

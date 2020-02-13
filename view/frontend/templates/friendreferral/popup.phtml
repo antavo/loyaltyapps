@@ -1,0 +1,19 @@
+<?php
+/**
+ * @var Antavo\LoyaltyApps\Block\Frontend\FriendReferral\Popup $block
+ */
+
+// Injecting variables into JavaScript code in a way that pleases CodeSniffer
+// results in invalid values; hence I place this here.
+// @codingStandardsIgnoreStart
+
+?>
+
+<?php if ($block->hasFriendReferralChannel('popup')): ?>
+    <script>
+        document.addEventListener('antavo_sdk_init_finished', function () {
+            Antavo.Popup.init();
+            Antavo.Popup.display('<?=$block->getFriendReferralUrl()?>');
+        });
+    </script>
+<?php endif; ?>

@@ -1,0 +1,37 @@
+<?php
+/**
+ * @var \Antavo\LoyaltyApps\Block\Frontend\Customer\OptInCheckbox $block
+ */
+
+if (!$block->isEnabled()) {
+    return;
+}
+
+?>
+
+<fieldset class="fieldset create account">
+    <legend class="legend">
+        <span>
+            <?php
+            /* @escapeNotVerified */
+            echo __('Join our loyalty program')
+            ?>
+        </span>
+    </legend>
+    <br>
+    <div class="field gst_number required">
+        <div class="control">
+            <input type="hidden" value="0" name="antavo_loyalty">
+            <input type="checkbox" name="antavo_loyalty"
+                   id="antavo_loyalty" title="<?php /* @escapeNotVerified */echo __('Loyalty')?>"
+                   class="input-checkbox">
+            <label class="label" for="antavo_loyalty">
+                <span>
+                    <?=$block->escapeHtml(
+                        __('By checking this box you will accept to join our loyalty program')
+                    )?>
+                </span>
+            </label>
+        </div>
+    </div>
+</fieldset>

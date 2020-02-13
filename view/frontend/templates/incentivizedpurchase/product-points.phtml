@@ -1,0 +1,41 @@
+<?php
+/**
+ * Displaying incentivized points under product details.
+ *
+ * @var Antavo\LoyaltyApps\Block\Frontend\IncentivizedPurchase\ProductPoints $block
+ */
+
+// If the block is not enabled yet, return
+if (!$block->isEnabled()) {
+    return;
+}
+
+// If the current product is not fetchable, return
+if (!$product = $block->fetchProduct($this->getRequest()->getParam('id'))) {
+    return;
+}
+
+?>
+
+<?=$this->getChildHtml('child')?>
+
+<div style="width: 100%; max-width: inherit; text-align: right;" class="extra-info">
+    <div class="antavo-points"></div>
+</div>
+
+<script>
+    function onBrandUpdate() {
+        Antavo.IncentivizedPurchase.init();
+        Antavo.Campaigns.init();
+
+        Antavo.Campaigns.calculateCampaignBonus(
+            <?=json_encode($block->createMockedTransactionFor($product))?>,
+            function (i) {
+                document
+                    .querySelectorAll('div[class="antavo-points"]')
+                    .forEach(function (container) {
+                        container.innerHTML = i.future;
+                    });
+            });
+    }
+</script>

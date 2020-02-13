@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_register_success">
+        <!-- This observer sends in customer's opt_in event after successful registration -->
+        <observer name="customer_register_success"
+                  instance="Antavo\LoyaltyApps\Helper\Customer\LoginObserver"/>
+
+        <!-- This observer send is customer's referral event if necessary -->
+        <observer name="customer_register_raf"
+                  instance="Antavo\LoyaltyApps\Helper\App\FriendReferral\CustomerRegisterObserver"/>
+    </event>
+
+    <event name="customer_login">
+        <!-- This observer sends in customer's opt_in event after successful login -->
+        <observer name="customer_login"
+                  instance="Antavo\LoyaltyApps\Helper\Customer\LoginObserver"/>
+    </event>
+
+    <event name="customer_logout">
+        <!-- This observer removes "__alc" cookie if necessary -->
+        <observer name="customer_logout"
+                  instance="Antavo\LoyaltyApps\Helper\Customer\LogoutObserver"/>
+    </event>
+
+    <event name="customer_save_before">
+        <!-- This observer avoids multiple profile update sending -->
+        <observer name="customer_save_before"
+                  instance="Antavo\LoyaltyApps\Helper\Customer\UpdateObserver"/>
+    </event>
+
+    <event name="customer_save_after">
+        <!-- This observer sends in profile changes to the Events API -->
+        <observer name="customer_save_after"
+                  instance="Antavo\LoyaltyApps\Helper\Customer\UpdateObserver"/>
+    </event>
+
+    <event name="page_block_html_topmenu_gethtml_before">
+        <!-- This observer injects a new top menu entry before render: "Loyalty Central" -->
+        <observer name="page_block_html_topmenu_gethtml_before"
+                  instance="Antavo\LoyaltyApps\Helper\Frontend\TopMenuRenderObserver" />
+    </event>
+
+    <event name="checkout_cart_save_after">
+        <!-- This observer generates loyalty coupons automatically if necessary -->
+        <observer name="checkout_cart_save_after"
+                  instance="Antavo\LoyaltyApps\Helper\Cart\CartCouponObserver" />
+    </event>
+
+    <event name="controller_action_predispatch_checkout_index_index">
+        <!-- This observer calculates the customer spendable points for using Magento Reward extension -->
+        <observer name="controller_action_predispatch_checkout_index_index"
+                  instance="Antavo\LoyaltyApps\Helper\Cart\RewardPointsObserver" />
+    </event>
+
+    <event name="antavo_checkout_sent_before">
+        <!-- This observer collects checkout data for the API request -->
+        <observer name="antavo_checkout_sent_before_checkout"
+                  instance="Antavo\LoyaltyApps\Helper\Checkout\CheckoutDataObserver" />
+    </event>
+
+    <event name="checkout_onepage_controller_success_action">
+        <!-- This observer sends in the checkout event to the Events API -->
+        <observer name="antavo_sales_order_save_after"
+                  instance="Antavo\LoyaltyApps\Helper\Checkout\CheckoutSuccessActionObserver" />
+
+        <!-- This observer sends in the referral bonus for referred checkouts -->
+        <observer name="checkout_onepage_controller_success_action"
+                  instance="Antavo\LoyaltyApps\Helper\App\FriendReferral\CheckoutObserver" />
+    </event>
+</config>

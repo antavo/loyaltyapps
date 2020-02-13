@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="antavo_checkout_sent_before">
+        <!-- This observer collects checkout data for the API request -->
+        <observer name="antavo_checkout_sent_before_checkout"
+                  instance="Antavo\LoyaltyApps\Helper\Checkout\CheckoutDataObserver" />
+    </event>
+
+    <event name="sales_order_save_before">
+        <!-- This observer sends in the reserve event if needed -->
+        <observer name="sales_order_save_before"
+                  instance="Antavo\LoyaltyApps\Helper\Checkout\BeforeCheckoutSaveObserver" />
+    </event>
+
+    <event name="sales_order_save_after">
+        <!-- This observer sends in the checkout event to the Events API -->
+        <observer name="sales_order_save_after"
+                  instance="Antavo\LoyaltyApps\Helper\Checkout\AfterCheckoutSaveObserver" />
+    </event>
+</config>

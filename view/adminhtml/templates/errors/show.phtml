@@ -1,0 +1,138 @@
+<?php
+/**
+ * @var Antavo\LoyaltyApps\Block\Adminhtml\Errors\Grid $block
+ */
+
+use Antavo\LoyaltyApps\Helper\ApiClient;
+use Antavo\LoyaltyApps\Helper\Logger;
+
+$options = ApiClient::getLogLevelOptions();
+
+$hasError = FALSE;
+$isEmpty = FALSE;
+
+$iterator = NULL;
+
+try {
+    $iterator = Logger::getErrors(20);
+
+    if (!$iterator):
+        $isEmpty = TRUE;
+    endif;
+} catch (RuntimeException $e) {
+    $hasError = TRUE;
+    ?>
+    <div class="messages">
+        <div class="message message-error message-in-rating-edit">
+            <div>
+                Could not open logfile.
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+?>
+
+<div class="page-main-actions">
+    <div class="page-actions-placeholder"></div>
+    <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+        <div class="page-actions-inner" data-title="Clear">
+            <div class="page-actions-buttons">
+                <?php if (!$hasError && !$isEmpty): ?>
+                    <form method="POST" action="<?=htmlspecialchars($block->getClearActionUrl())?>">
+                        <input type="hidden" name="form_key" value="<?=htmlspecialchars($block->getFormKey())?>" />
+                        <button id="clear" type="submit" class="action-scalable primary">
+                            <span>Clear API log</span>
+                        </button>
+                    </form>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="messages">
+    <div class="message message-notice message-in-rating-edit">
+        <div>
+            API log level is set to "<?php echo htmlspecialchars($options[$block->getLogLevel()]); ?>".
+        </div>
+    </div>
+</div>
+
+<?php
+// There was a file open error; displaying no table.
+if ($hasError) {
+    return;
+}
+
+// Displaying notice upon founding logfile empty.
+if ($isEmpty): ?>
+    <div class="messages">
+        <div class="message message-notice message-in-rating-edit">
+            <div>
+                All is well. No errors found.
+            </div>
+        </div>
+    </div>
+    <?php
+    return;
+endif;
+
+?>
+
+<div class="admin__data-grid-wrap" data-role="grid-wrapper">
+    <table class="data-grid data-grid-draggable" data-role="grid">
+        <thead>
+        <tr>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Date</span>
+            </th>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Level</span>
+            </th>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Request</span>
+            </th>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Response</span>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($iterator as $i => $line): ?>
+                <?php $error = Logger::parseLogEntry($line); ?>
+
+                <tr class="<?=$i % 2 ? '_odd-row' : ''?>">
+                    <?php if ($error): ?>
+                        <td>
+                            <div class="data-grid-cell-content">
+                                <?=htmlspecialchars($error['date'])?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="data-grid-cell-content">
+                                <?=htmlspecialchars($error['level'])?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pre-cont">
+                                <pre><?=htmlspecialchars($error['request'])?></pre>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pre-cont">
+                                <pre><?=htmlspecialchars($error['response'])?></pre>
+                            </div>
+                        </td>
+                    <?php else: ?>
+                        <td colspan="5">
+                            <?=htmlspecialchars($line)?>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

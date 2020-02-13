@@ -1,0 +1,26 @@
+<?php
+/**
+ * Generate hidden form for approving or rejecting checkouts.
+ *
+ * @var Antavo\LoyaltyApps\Block\Adminhtml\Checkout\Form $block
+ */
+
+$url = $block->getActionUrl();
+
+?>
+
+<?php foreach (['approve', 'reject'] as $action): ?>
+    <form method="POST"
+          action="<?=htmlspecialchars($url)?>"
+          id="<?=htmlspecialchars('antavo_post_' . $action)?>">
+        <input type="hidden"
+               name="action"
+               value="<?=htmlspecialchars($action)?>" />
+        <input type="hidden"
+               name="checkout_id"
+               value="<?=htmlspecialchars($block->getOrderId())?>" />
+        <input type="hidden"
+               name="form_key"
+               value="<?=htmlspecialchars($block->getFormKey())?>" />
+    </form>
+<?php endforeach; ?>

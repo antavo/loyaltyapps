@@ -1,0 +1,36 @@
+<?php
+/**
+ * Loads and initializes Loyalty JavaScript SDK.
+ *
+ * @var \Antavo\LoyaltyApps\Block\Frontend\JsSdk $block
+ */
+
+if (!$block->isEnabled()) {
+    return;
+}
+
+// Injecting variables into JavaScript code in a way that pleases CodeSniffer
+// results in invalid values; hence I place this here.
+// @codingStandardsIgnoreStart
+
+?>
+<script>
+    var onBrandUpdate = onBrandUpdate || function () {};
+
+    (function (t, u, c) {
+        var d = document, o = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        if (c) {
+            o.onload = c;
+        }
+        o.src = u;
+        s.parentNode.insertBefore(o, s);
+    }("script", "<?=$block->getSdkUrl()?>", function () {
+        Antavo.SDK.init(
+            "<?=$block->getApiKey()?>",
+            "<?=$block->getCustomerId()?>",
+            <?=json_encode($block->getSdkConfiguration())?>,
+            onBrandUpdate,
+            "customer"
+        );
+    }));
+</script>

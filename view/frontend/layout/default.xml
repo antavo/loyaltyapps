@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <!-- This block appends the JS SDK into the footer -->
+            <block class="Antavo\LoyaltyApps\Block\Frontend\JsSdk"
+                   name="antavo_js_sdk"
+                   template="Antavo_LoyaltyApps::js-sdk.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

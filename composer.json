@@ -2,6 +2,7 @@
   "name": "antavo/loyaltyapps",
   "description": "Run a gamified loyalty program in your Magento store so customers come back and spend more often.",
   "type": "magento2-module",
+  "version": "2.3.0",
   "license": [
     "OSL-3.0",
     "AFL-3.0"

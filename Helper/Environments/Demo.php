@@ -19,10 +19,10 @@ class Demo extends AbstractEnvironment
     /**
      * @inheritdoc
      */
-    protected $_apiUrl = 'https://api-apps-demo.antavo.com';
+    protected $_apiUrl = 'https://api.demo.antavo.com';
 
     /**
      * @inheritdoc
      */
-    protected $_sdkUrl = 'https://api-apps-demo.antavo.com/sdk/latest-apps-demo';
+    protected $_sdkUrl = 'https://api.demo.antavo.com/sdk/latest-apps-demo';
 }

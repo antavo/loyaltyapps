@@ -112,23 +112,20 @@ class CheckoutDataObserver implements ObserverInterface
                 $baseDiscount = $item->getDiscountAmount() ?: 0;
                 $discount += $baseDiscount;
 
-                $items[] = array_merge(
-                    $this->_checkoutHelper->getCustomAttributes($product),
-                    [
-                        'product_id' => $product->getId(),
-                        'product_name' => $product->getName(),
-                        'product_url' => $product->getUrlInStore(),
-                        'price' => $subtotal / $quantity,
-                        'discount' => $baseDiscount,
-                        'subtotal' => $subtotal - $baseDiscount,
-                        'sku' => $item->getSku(), // $product->getSku() throws sometimes exception
-                        'quantity' => $quantity,
-                        'product_category' => implode(
-                            ', ',
-                            $this->_checkoutHelper->getProductCategories($product)
-                        ),
-                    ]
-                );
+                $items[] = [
+                    'product_id' => $product->getId(),
+                    'product_name' => $product->getName(),
+                    'product_url' => $product->getUrlInStore(),
+                    'price' => $subtotal / $quantity,
+                    'discount' => $baseDiscount,
+                    'subtotal' => $subtotal - $baseDiscount,
+                    'sku' => $item->getSku(), // $product->getSku() throws sometimes exception
+                    'quantity' => $quantity,
+                    'product_category' => implode(
+                        ', ',
+                        $this->_checkoutHelper->getProductCategories($product)
+                    ),
+                ];
             }
         }
 
@@ -202,8 +199,6 @@ class CheckoutDataObserver implements ObserverInterface
     /**
      * Collecting data from order instead of invoice because invoice doesn't exist yet
      *
-     * Apparently it's a Beerhawk customization
-     *
      * @param OrderModel $order
      * @param DataObject $data
      */
@@ -228,23 +223,20 @@ class CheckoutDataObserver implements ObserverInterface
             $baseDiscount = $item->getDiscountAmount() ?: 0;
             $discount += $baseDiscount;
 
-            $items[] = array_merge(
-                $this->_checkoutHelper->getCustomAttributes($product),
-                [
-                    'product_id' => $product->getId(),
-                    'product_name' => $product->getName(),
-                    'product_url' => $product->getUrlInStore(),
-                    'price' => $subtotal / $quantity,
-                    'discount' => $baseDiscount,
-                    'subtotal' => $subtotal - $baseDiscount,
-                    'sku' => $item->getSku(), // $product->getSku() throws sometimes exception
-                    'quantity' => $quantity,
-                    'product_category' => implode(
-                        ', ',
-                        $this->_checkoutHelper->getProductCategories($product)
-                    ),
-                ]
-            );
+            $items[] = [
+                'product_id' => $product->getId(),
+                'product_name' => $product->getName(),
+                'product_url' => $product->getUrlInStore(),
+                'price' => $subtotal / $quantity,
+                'discount' => $baseDiscount,
+                'subtotal' => $subtotal - $baseDiscount,
+                'sku' => $item->getSku(), // $product->getSku() throws sometimes exception
+                'quantity' => $quantity,
+                'product_category' => implode(
+                    ', ',
+                    $this->_checkoutHelper->getProductCategories($product)
+                ),
+            ];
         }
 
         $data->addData(

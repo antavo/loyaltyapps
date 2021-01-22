@@ -39,6 +39,30 @@ class PointMechanismTypeTest extends TestCase
                     'label' => 'Using coupons',
                     'value' => PointMechanismType::USING_COUPONS,
                 ],
+            ],
+            (new PointMechanismType)->toOptionArray()
+        );
+    }
+
+    /**
+     * @covers \Antavo\LoyaltyApps\Helper\SourceModels\PointMechanismType::toOptionArray()
+     */
+    public function testToOptionArray_reward()
+    {
+        $this
+            ->getMockBuilder('\Magento\Reward\Model\Reward')
+            ->setMethods(
+                [
+                    'foo'
+                ]
+            )->getMock();
+
+        $this->assertEquals(
+            [
+                [
+                    'label' => 'Using coupons',
+                    'value' => PointMechanismType::USING_COUPONS,
+                ],
                 [
                     'label' => 'Using rewards',
                     'value' => PointMechanismType::USING_REWARDS,

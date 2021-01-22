@@ -2,7 +2,7 @@
 namespace Antavo\LoyaltyApps\Helper\App\FriendReferral;
 
 use Antavo\LoyaltyApps\Helper\ApiClient;
-use Antavo\LoyaltyApps\Helper\App\FriendReferral as FriendReferralHelper;
+use Antavo\LoyaltyApps\Helper\App\Coupons\FriendReferral as FriendReferralHelper;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -17,7 +17,7 @@ use Magento\Sales\Model\Order;
 class CheckoutObserver implements ObserverInterface
 {
     /**
-     * @var \Antavo\LoyaltyApps\Helper\App\FriendReferral
+     * @var FriendReferralHelper
      */
     private $_friendReferralHelper;
 
@@ -91,7 +91,7 @@ class CheckoutObserver implements ObserverInterface
     }
 
     /**
-     * @param \Antavo\LoyaltyApps\Helper\App\FriendReferral $friendReferralHelper
+     * @param FriendReferralHelper $friendReferralHelper
      * @param \Antavo\LoyaltyApps\Helper\ApiClient $apiClient
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param \Magento\Sales\Model\Order $orderModel
@@ -167,7 +167,7 @@ class CheckoutObserver implements ObserverInterface
                 $this->removeReferralCookie();
             }
 
-            if ($this->_friendReferralHelper->isFriendReferralCouponCode($order->getCouponCode())) {
+            if ($this->_friendReferralHelper->isCouponCode($order->getCouponCode())) {
                 $this->sendCouponRedeemEvent($order);
             }
         }

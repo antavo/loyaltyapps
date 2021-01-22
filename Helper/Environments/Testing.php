@@ -19,10 +19,10 @@ class Testing extends AbstractEnvironment
     /**
      * @inheritdoc
      */
-    protected $_apiUrl = 'https://api-apps-test.antavo.com';
+    protected $_apiUrl = 'https://api.test.antavo.com';
 
     /**
      * @inheritdoc
      */
-    protected $_sdkUrl = 'https://api-apps-test.antavo.com/sdk/latest-apps-test';
+    protected $_sdkUrl = 'https://api.test.antavo.com/sdk/latest-apps-test';
 }

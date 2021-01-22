@@ -19,10 +19,10 @@ class SalesDemo extends AbstractEnvironment
     /**
      * @inheritdoc
      */
-    protected $_apiUrl = 'https://api-salesdemo.antavo.com';
+    protected $_apiUrl = 'https://api.salesdemo.antavo.com';
 
     /**
      * @inheritdoc
      */
-    protected $_sdkUrl = 'https://api-salesdemo.antavo.com/sdk/latest-salesdemo';
+    protected $_sdkUrl = 'https://api.salesdemo.antavo.com/sdk/latest-salesdemo';
 }

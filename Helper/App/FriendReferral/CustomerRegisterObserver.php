@@ -2,7 +2,7 @@
 namespace Antavo\LoyaltyApps\Helper\App\FriendReferral;
 
 use Antavo\LoyaltyApps\Helper\ApiClient;
-use Antavo\LoyaltyApps\Helper\App\FriendReferral as FriendReferralHelper;
+use Antavo\LoyaltyApps\Helper\App\Coupons\FriendReferral as FriendReferralHelper;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Stdlib\CookieManagerInterface as CookieManager;
@@ -18,7 +18,7 @@ class CustomerRegisterObserver implements ObserverInterface
     private $_cookieManager;
 
     /**
-     * @var \Antavo\LoyaltyApps\Helper\App\FriendReferral
+     * @var FriendReferralHelper
      */
     private $_friendReferralHelper;
 
@@ -29,7 +29,7 @@ class CustomerRegisterObserver implements ObserverInterface
 
     /**
      * @param \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager
-     * @param \Antavo\LoyaltyApps\Helper\App\FriendReferral $friendReferralHelper
+     * @param FriendReferralHelper $friendReferralHelper
      * @param \Antavo\LoyaltyApps\Helper\ApiClient $apiClient
      */
     public function __construct(

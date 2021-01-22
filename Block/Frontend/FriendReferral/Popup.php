@@ -1,7 +1,7 @@
 <?php
 namespace Antavo\LoyaltyApps\Block\Frontend\FriendReferral;
 
-use Antavo\LoyaltyApps\Helper\App\FriendReferral as FriendReferralHelper;
+use Antavo\LoyaltyApps\Helper\App\Coupons\FriendReferral as FriendReferralHelper;
 use Magento\Framework\View\Element\Template;
 
 /**
@@ -10,7 +10,7 @@ use Magento\Framework\View\Element\Template;
 class Popup extends Template
 {
     /**
-     * @var \Antavo\LoyaltyApps\Helper\App\FriendReferral
+     * @var FriendReferralHelper
      */
     protected $_friendReferralHelper;
 
@@ -39,7 +39,7 @@ class Popup extends Template
 
     /**
      * @param Template\Context $context
-     * @param \Antavo\LoyaltyApps\Helper\App\FriendReferral $friendReferralHelper
+     * @param FriendReferralHelper $friendReferralHelper
      * @param array $data
      */
     public function __construct(

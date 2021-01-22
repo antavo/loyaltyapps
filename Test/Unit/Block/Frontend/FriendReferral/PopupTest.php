@@ -3,6 +3,7 @@ namespace Antavo\LoyaltyApps\Test\Unit\Block\Frontend\FriendReferral;
 
 use Antavo\LoyaltyApps\Block\Frontend\FriendReferral\Popup;
 use Antavo\LoyaltyApps\Test\Unit\TestCase;
+use Antavo\LoyaltyApps\Helper\App\Coupons\FriendReferral as FriendReferralHelper;
 
 /**
  *
@@ -56,7 +57,7 @@ class PopupTest extends TestCase
     public function testHasFriendReferralChannel()
     {
         $friendReferralHelper = $this
-            ->getMockBuilder('\Antavo\LoyaltyApps\Helper\App\FriendReferral')
+            ->getMockBuilder(FriendReferralHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
 

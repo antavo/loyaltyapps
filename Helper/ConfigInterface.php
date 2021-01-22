@@ -44,6 +44,26 @@ interface ConfigInterface
     /**
      * @var string
      */
+    const XML_PATH_COUPON_DISCOUNT_GROUPS = 'antavo_loyaltyapps/discount/coupon_discount_groups';
+
+    /**
+     * @var string
+     */
+    const XML_PATH_COUPON_DISCOUNT_WEBSITES = 'antavo_loyaltyapps/discount/coupon_discount_websites';
+
+    /**
+     * @var string
+     */
+    const XML_PATH_COUPON_DISCOUNT_SEGMENTS = 'antavo_loyaltyapps/discount/coupon_discount_segments';
+
+    /**
+     * @var string
+     */
+    const XML_PATH_COUPON_DISCOUNT_CODE_PREFIX = 'antavo_loyaltyapps/discount/coupon_discount_code_prefix';
+
+    /**
+     * @var string
+     */
     const XML_PATH_FRIEND_REFERRAL_DISCOUNT_CODE_PREFIX = 'antavo_loyaltyapps/discount/friend_referral_discount_code_prefix';
 
     /**
@@ -98,7 +118,7 @@ interface ConfigInterface
      * @var string
      */
     const XML_PATH_CONVERT_CURRENCY = 'antavo_loyaltyapps/purchase/convert_currency';
-    
+
     /**
      * @var string
      */

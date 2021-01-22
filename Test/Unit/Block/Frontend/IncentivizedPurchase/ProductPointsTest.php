@@ -59,12 +59,6 @@ class ProductPointsTest extends TestCase
                 'transaction_id' => 'random_tx_' . time(),
                 'items' => [
                     [
-                        'style' => 'cool',
-                        'country' => 'USA',
-                        'brewery' => 'what',
-                        'abvrange' => 22,
-                        'alcoholic_content' => 99,
-                        'bottle_size' => 3,
                         'product_id' => 'T-0001',
                         'product_name' => 'heavy',
                         'product_url' => 'https://google.com/magento',
@@ -224,12 +218,6 @@ class ProductPointsTest extends TestCase
 
         $this->assertSame(
             [
-                'style' => 'cool',
-                'country' => 'USA',
-                'brewery' => 'what',
-                'abvrange' => 22,
-                'alcoholic_content' => 99,
-                'bottle_size' => 3,
                 'product_id' => 'T-0001',
                 'product_name' => 'heavy',
                 'product_url' => 'https://google.com/magento',
@@ -295,12 +283,6 @@ class ProductPointsTest extends TestCase
 
         $this->assertSame(
             [
-                'style' => 'cool',
-                'country' => 'USA',
-                'brewery' => 'what',
-                'abvrange' => 22,
-                'alcoholic_content' => 99,
-                'bottle_size' => 3,
                 'product_id' => 'T-0001',
                 'product_name' => 'heavy',
                 'product_url' => 'https://google.com/magento',
@@ -412,20 +394,6 @@ class ProductPointsTest extends TestCase
             ->getMockBuilder('\Antavo\LoyaltyApps\Helper\Checkout')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $checkoutHelper
-            ->expects($this->any())
-            ->method('getCustomAttributes')
-            ->willReturn(
-                [
-                    'style' => 'cool',
-                    'country' => 'USA',
-                    'brewery' => 'what',
-                    'abvrange' => 22,
-                    'alcoholic_content' => 99,
-                    'bottle_size' => 3,
-                ]
-            );
 
         $checkoutHelper
             ->expects($this->any())

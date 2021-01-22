@@ -144,30 +144,26 @@ class CartPoints extends Template
 
     /**
      * Exports the product properties for campaign bonus calculation.
-     * It contains the custom attributes for Beerhawk, such as brewery, etc.
      *
      * @param Item $item
      * @return array
      */
     public function exportCartItemProperties(Item $item)
     {
-        return array_merge(
-            $this->_checkoutHelper->getCustomAttributes($item->getProduct()),
-            [
-                'product_id' => $item->getProduct()->getSku(),
-                'product_name' => $item->getName(),
-                'product_url' => $item->getProduct()->getUrlInStore(),
-                'discount' => $discount = $item->getDiscountAmount() ?: 0,
-                'price' => $unitPrice = $this->calculateProductPrice($item->getProduct()),
-                'subtotal' => $unitPrice * $item->getQty() - $discount,
-                'sku' => $item->getSku(),
-                'quantity' => $item->getQty(),
-                'product_category' => implode(
-                    ', ',
-                    $this->_checkoutHelper->getProductCategories($item->getProduct())
-                ),
-            ]
-        );
+        return [
+            'product_id' => $item->getProduct()->getSku(),
+            'product_name' => $item->getName(),
+            'product_url' => $item->getProduct()->getUrlInStore(),
+            'discount' => $discount = $item->getDiscountAmount() ?: 0,
+            'price' => $unitPrice = $this->calculateProductPrice($item->getProduct()),
+            'subtotal' => $unitPrice * $item->getQty() - $discount,
+            'sku' => $item->getSku(),
+            'quantity' => $item->getQty(),
+            'product_category' => implode(
+                ', ',
+                $this->_checkoutHelper->getProductCategories($item->getProduct())
+            ),
+        ];
     }
 
     /**

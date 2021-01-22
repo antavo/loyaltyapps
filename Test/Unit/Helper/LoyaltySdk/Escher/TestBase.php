@@ -5,7 +5,7 @@ use Antavo\LoyaltyApps\Helper\LoyaltySdk\EmarTech\Escher\Escher;
 use \DateTime;
 use \DateTimeZone;
 
-abstract class TestBase extends \PHPUnit_Framework_TestCase
+abstract class TestBase extends \PHPUnit\Framework\TestCase
 {
     protected function assertEqualMaps(array $expected, array $actual, $message = '')
     {

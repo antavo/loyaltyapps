@@ -52,7 +52,7 @@ class CurlTransport implements TransportInterface {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
         // Default SSL setting is out of date.
-        curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+        curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1.2');
 
         // Recording request headers too.
         curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);

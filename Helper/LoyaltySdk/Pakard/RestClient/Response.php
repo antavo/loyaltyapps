@@ -168,11 +168,11 @@ class Response implements ResponseInterface {
      * @static
      */
     protected function parseXmlBody($body) {
-        if (($parsed_body = simplexml_load_string($body)) === FALSE) {
+        try {
+            return simplexml_load_string($body);
+        } catch (\Exception $e) {
             throw new ResponseParserException(error_get_last()['message']);
         }
-
-        return $parsed_body;
     }
 
     /**

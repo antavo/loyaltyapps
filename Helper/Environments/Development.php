@@ -19,10 +19,10 @@ class Development extends AbstractEnvironment
     /**
      * @inheritdoc
      */
-    protected $_apiUrl = 'http://api-apps-dev.antavo.local';
+    protected $_apiUrl = 'https://api-apps-dev.antavo.com';
 
     /**
      * @inheritdoc
      */
-    protected $_sdkUrl = 'http://api-apps-dev.antavo.local/sdk';
+    protected $_sdkUrl = 'https://api-apps-dev.antavo.com/sdk';
 }

@@ -35,6 +35,6 @@ class IndexTest extends TestCase
     {
         /** @var \Antavo\LoyaltyApps\Controller\Index\Index $class */
         $class = $this->getClassMock();
-        $class->execute();
+        $this->assertNull($class->execute());
     }
 }

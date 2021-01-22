@@ -206,12 +206,6 @@ class CartPointsTest extends TestCase
 
         $this->assertSame(
             [
-                'style' => 'style',
-                'country' => 'country',
-                'brewery' => 'brewery',
-                'abvrange' => 'range',
-                'alcoholic_content' => 15,
-                'bottle_size' => 1,
                 'product_id' => 'SKU',
                 'product_name' => 'beautiful',
                 'product_url' => 'https://something-url.com',
@@ -235,20 +229,6 @@ class CartPointsTest extends TestCase
             ->getMockBuilder('\Antavo\LoyaltyApps\Helper\Checkout')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $checkoutHelper
-            ->expects($this->any())
-            ->method('getCustomAttributes')
-            ->willReturn(
-                [
-                    'style' => 'style',
-                    'country' => 'country',
-                    'brewery' => 'brewery',
-                    'abvrange' => 'range',
-                    'alcoholic_content' => 15,
-                    'bottle_size' => 1,
-                ]
-            );
 
         $checkoutHelper
             ->expects($this->any())

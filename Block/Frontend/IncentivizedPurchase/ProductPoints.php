@@ -144,30 +144,26 @@ class ProductPoints extends Template
 
     /**
      * Exports the product properties for campaign bonus calculation.
-     * It contains the custom attributes for Beerhawk, such as brewery, etc.
      *
      * @param ProductModel $product
      * @return array
      */
     public function exportProductProperties(ProductModel $product)
     {
-        return array_merge(
-            $this->_checkoutHelper->getCustomAttributes($product),
-            [
-                'product_id' => $product->getSku(),
-                'product_name' => $product->getName(),
-                'product_url' => $product->getUrlInStore(),
-                'quantity' => 1,
-                'subtotal' => $price = $this->calculateProductPrice($product),
-                'sku' => $product->getSku(),
-                'price' => $price,
-                'discount' => 0,
-                'product_category' => implode(
-                    ', ',
-                    $this->_checkoutHelper->getProductCategories($product)
-                ),
-            ]
-        );
+        return [
+            'product_id' => $product->getSku(),
+            'product_name' => $product->getName(),
+            'product_url' => $product->getUrlInStore(),
+            'quantity' => 1,
+            'subtotal' => $price = $this->calculateProductPrice($product),
+            'sku' => $product->getSku(),
+            'price' => $price,
+            'discount' => 0,
+            'product_category' => implode(
+                ', ',
+                $this->_checkoutHelper->getProductCategories($product)
+            ),
+        ];
     }
 
     /**

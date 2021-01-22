@@ -208,26 +208,6 @@ class Checkout
     }
 
     /**
-     * Returns custom product attributes for BeerHawk customization.
-     * Please do NOT change the notation of this, because the client uses
-     * for internal backend processes exactly this method.
-     *
-     * @param \Magento\Catalog\Model\Product $product
-     * @return array
-     */
-    public function getCustomAttributes(ProductModel $product)
-    {
-        return [
-            'style' => $this->getCustomAttributeValue($product, 'style'),
-            'country' => $this->getCustomAttributeValue($product, 'country'),
-            'brewery' => $this->getCustomAttributeValue($product, 'brewery'),
-            'abvrange' => $this->getCustomAttributeValue($product, 'abvrange'),
-            'alcoholic_content' => $this->getCustomAttributeValue($product, 'alcoholic_content'),
-            'bottle_size' => $this->getCustomAttributeValue($product, 'bottle_size'),
-        ];
-    }
-
-    /**
      * @param \Magento\Catalog\Model\Product $product
      * @return array
      */
@@ -245,42 +225,6 @@ class Checkout
                 []
             )
         );
-    }
-
-    /**
-     * Helper method to keep getting properties transparent.
-     *
-     * @param \Magento\Catalog\Model\Product $product
-     * @param string $attribute
-     * @return mixed|null
-     */
-    private function getCustomAttributeValue(ProductModel $product, $attribute)
-    {
-        switch ($attribute) {
-            case 'country':
-            case 'style':
-            case 'brewery':
-            case 'abvrange':
-                if ($attr = $product->getResource()->getAttribute($attribute)) {
-                    // returns label value
-                    /** @var Phrase $phrase */
-                    $phrase = $attr->getFrontend()->getValue($product);
-
-                    if ($phrase instanceof Phrase) {
-                        return $phrase->getText();
-                    }
-
-                    return $phrase;
-                }
-
-                return NULL;
-            default:
-                if ($attr = $product->getCustomAttribute($attribute)) {
-                    return $attr->getValue();
-                }
-        }
-
-        return NULL;
     }
 
     /**
